@@ -1,4 +1,4 @@
-package com.haengsin.church.authentication.dto
+package com.haengsin.church.authentication.vo
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
@@ -15,4 +15,5 @@ data class SignInRequest (
     @field:NotBlank
     @field:Email
     val password: String
+
 )

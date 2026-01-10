@@ -19,3 +19,8 @@ spring:
         jdbc:
           batch_size: 1000
         default_batch_fetch_size: 1000
+
+security:
+  jwt:
+    secret: hschurchhschurch
+    access-token-ttl-seconds: 3600
