@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: "Asia/Seoul"
+      POSTGRES_DB: haengsin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hschurch1
+    volumes:
+      - ~/docker/postgres/data:/var/lib/postgresql/data
+    restart: always
