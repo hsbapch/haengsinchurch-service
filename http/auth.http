@@ -1,0 +1,14 @@
+###
+# @no-cookie-jar
+POST http://localhost:8100/api/v1/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hschurch",
+  "password": "hschurch"
+}
+
+###
+GET http://localhost:8100/admin/api/v1/boards
+Content-Type: application/json
+Cookie: {{accessTokenCookie}}; {{refreshTokenCookie}}
