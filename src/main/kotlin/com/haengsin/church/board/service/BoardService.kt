@@ -13,4 +13,6 @@ interface BoardService {
     fun deleteBoard(id: Long)
 
     fun getBoard(id: Long): Board
+
+    fun getLatestBoard(): Board?
 }

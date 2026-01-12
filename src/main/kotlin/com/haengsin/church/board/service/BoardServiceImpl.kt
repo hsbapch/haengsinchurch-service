@@ -36,4 +36,9 @@ class BoardServiceImpl(
     override fun getBoard(id: Long): Board =
         boardRepository.findByIdOrNull(id)
             ?: throw BoardNotFoundException(id)
+
+    override fun getLatestBoard(): Board? =
+        boardRepository.findFirstByOrderByCreatedAtDesc()
+
+
 }
