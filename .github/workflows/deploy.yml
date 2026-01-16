@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: docker/deploy/Dockerfile
+          file: docker/Dockerfile
           push: true
           tags: |
             hsbapch/hsbapch-backend:sha-${{ github.sha }}
