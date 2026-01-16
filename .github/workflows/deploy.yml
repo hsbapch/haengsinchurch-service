@@ -2,7 +2,7 @@ name: Deploy to Lightsail
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main", "develop"]
 
 permissions:
   contents: read
@@ -16,72 +16,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1) 브랜치에 따라 프로파일 결정
+      # 브랜치에 따라 프로파일 결정
       - name: Set profile by branch
         run: |
-          if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            echo "SPRING_PROFILES_ACTIVE=prod" >> $GITHUB_ENV
-          elif [ "${GITHUB_REF_NAME}" = "develop" ]; then
-            echo "SPRING_PROFILES_ACTIVE=dev" >> $GITHUB_ENV
-          else
-            echo "SPRING_PROFILES_ACTIVE=local" >> $GITHUB_ENV
-          fi
+          case "${GITHUB_REF_NAME}" in
+            main)
+              echo "SPRING_PROFILES_ACTIVE=prod" >> $GITHUB_ENV
+              ;;
+            develop)
+              echo "SPRING_PROFILES_ACTIVE=dev" >> $GITHUB_ENV
+              ;;
+            *)
+              echo "SPRING_PROFILES_ACTIVE=local" >> $GITHUB_ENV
+              ;;
+          esac
 
-      # 2) Docker Hub 로그인 (PAT 권장)
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Debug checkout and Dockerfile
-        run: |
-          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
-          echo "GITHUB_SHA=$GITHUB_SHA"
-          ls -al
-          echo "---- Dockerfile head ----"
-          head -n 10 Dockerfile
-      
-
-      # 3) 이미지 빌드 & 푸시
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
-            hsbapch/hsbapch-backend:sha-${{ github.sha }}
-            hsbapch/hsbapch-backend:latest
+            ${{ env.IMAGE_REPO }}:sha-${{ github.sha }}
+            ${{ env.IMAGE_REPO }}:${{ github.ref_name }}
 
-
-      # 4) Lightsail에 SSH 접속해서 compose 실행
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USER }}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          port: 22
           script: |
             set -e
             cd /opt/hsbapch-backend
 
             IMAGE="${{ env.IMAGE_REPO }}:sha-${{ github.sha }}"
+            echo "DEPLOY IMAGE=$IMAGE"
+            echo "DEPLOY PROFILE=${{ env.SPRING_PROFILES_ACTIVE }}"
 
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-            # 서버에 .env 파일을 두지 않는 전제: 실행 시점에만 환경변수 주입
+            # 프로파일/DB가 확실히 반영되도록 강제 재생성
             IMAGE="$IMAGE" \
             SPRING_PROFILES_ACTIVE="${{ env.SPRING_PROFILES_ACTIVE }}" \
-            SPRING_DATASOURCE_URL="${{ secrets.DB_URL }}" \
-            SPRING_DATASOURCE_USERNAME="${{ secrets.DB_USERNAME }}" \
-            SPRING_DATASOURCE_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-            docker compose pull
-
-            IMAGE="$IMAGE" \
-            SPRING_PROFILES_ACTIVE="${{ env.SPRING_PROFILES_ACTIVE }}" \
-            SPRING_DATASOURCE_URL="${{ secrets.DB_URL }}" \
-            SPRING_DATASOURCE_USERNAME="${{ secrets.DB_USERNAME }}" \
-            SPRING_DATASOURCE_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-            docker compose up -d
+            docker compose up -d --pull always --force-recreate
 
             docker image prune -f
