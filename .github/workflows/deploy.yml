@@ -38,7 +38,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./docker/deploy/Dockerfile
+          context: .
+          file: docker/deploy/DockerFile
           push: true
           tags: |
             ${{ env.IMAGE_REPO }}:sha-${{ github.sha }}
