@@ -2,7 +2,7 @@ name: Deploy to Lightsail
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -34,12 +34,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Debug checkout and Dockerfile
+        run: |
+          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
+          echo "GITHUB_SHA=$GITHUB_SHA"
+          ls -al
+          echo "---- Dockerfile head ----"
+          head -n 10 Dockerfile
+      
+
       # 3) 이미지 빌드 & 푸시
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
           push: true
           tags: |
             hsbapch/hsbapch-backend:sha-${{ github.sha }}
