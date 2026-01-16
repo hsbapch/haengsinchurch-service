@@ -42,14 +42,13 @@ jobs:
             set -e
             cd /opt/hsbapch-backend
 
-            IMAGE="${{ env.IMAGE_REPO }}:sha-${{ github.sha }}"
+            IMAGE="${{ env.IMAGE_REPO }}:latest"
             echo "DEPLOY IMAGE=$IMAGE"
             echo "DEPLOY PROFILE=prod"
 
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-            IMAGE="$IMAGE" \
-            SPRING_PROFILES_ACTIVE="prod" \
-            docker compose up -d --pull always --force-recreate
+            IMAGE="$IMAGE" docker compose pull
+            IMAGE="$IMAGE" docker compose up -d
 
             docker image prune -f
