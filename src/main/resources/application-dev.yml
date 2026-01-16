@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: hschurch-service
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    out-of-order: true
+    url: jdbc:postgresql://ls-ebe39b365ab635ebfe8726a65c83b9b1a54a9407.crauo4uiie9r.ap-northeast-2.rds.amazonaws.com:5432/hsbapch?currentSchema=dev
+    user: hsbapch
+    password: hschurch
+  datasource:
+    url: jdbc:postgresql://ls-ebe39b365ab635ebfe8726a65c83b9b1a54a9407.crauo4uiie9r.ap-northeast-2.rds.amazonaws.com:5432/hsbapch?currentSchema=dev
+    username: hsbapch
+    password: hschurch
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: true
+    defer-datasource-initialization: false
+
+logging:
+  level:
+    com.delivered: INFO
