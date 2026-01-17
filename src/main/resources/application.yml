@@ -34,6 +34,3 @@ security:
 aws:
   s3:
     bucket: hsbapch-storage
-    region: ap-northeast-2
-    access-key: AKIA6HW5JCWPYWBQXTOL
-    secret-key: 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
