@@ -35,7 +35,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+    implementation(platform("org.springdoc:springdoc-openapi-bom:3.0.1"))
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui")
 
     //jwt
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")

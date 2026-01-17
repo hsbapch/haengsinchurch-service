@@ -5,6 +5,7 @@ import com.haengsin.church.board.usecase.DeleteBoardUsecase
 import com.haengsin.church.board.usecase.UpdateBoardUsecase
 import com.haengsin.church.board.vo.CreateBoardRequest
 import com.haengsin.church.board.vo.UpdateBoardRequest
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@Tag(name = "Admin Board", description = "게시판")
 @RestController
 @RequestMapping("/admin/api/v1/boards")
 class AdminBoardController(

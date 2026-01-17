@@ -12,6 +12,6 @@ class UploadFileUsecase(
 ) : UsecaseInterface<MultipartFile, String>{
 
     override fun execute(input: MultipartFile): String {
-        return ftpService.putObject("${ UUID.randomUUID()}-$input.originalFilename", input.inputStream)
+        return ftpService.putObject("${ UUID.randomUUID()}-${input.originalFilename}", input.inputStream)
     }
 }

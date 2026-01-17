@@ -11,18 +11,17 @@ import java.io.InputStream
 @Service
 class FtpServiceImpl(
     private val s3Client: S3Client,
-    @Value("\${cloud.aws.s3.bucket}") private val bucket: String,
+    @Value("\${aws.s3.bucket}") private val bucket: String,
 ): FtpService {
 
     override fun putObject(key: String, data: InputStream): String {
         val putObjectRequest = PutObjectRequest.builder()
             .bucket(bucket)
-            .key(key)
-            .acl(ObjectCannedACL.PUBLIC_READ)
+            .key("public/${key}")
             .build()
 
         s3Client.putObject(putObjectRequest, RequestBody.fromBytes(data.readBytes()))
-        return "https://$bucket.s3.amazonaws.com/$key"
+        return "https://$bucket.s3.amazonaws.com/public/$key"
     }
 
     override fun getObject(key: String): ByteArray {
