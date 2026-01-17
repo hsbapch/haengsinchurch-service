@@ -1,0 +1,2 @@
+GET https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=PLoE5IEOib3i8lXx9J3Ce1JSlcX17Umwv_
+x-goog-api-key: AIzaSyCCpfl0TVqidEjoExH7erRW7q-0NVHvbtQ

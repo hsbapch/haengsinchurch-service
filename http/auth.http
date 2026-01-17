@@ -9,6 +9,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8100/admin/api/v1/boards
+GET http://54.180.204.64:8080/admin/api/v1/boards
 Content-Type: application/json
-Cookie: {{accessTokenCookie}}; {{refreshTokenCookie}}
