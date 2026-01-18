@@ -30,7 +30,7 @@ class AdminBoardController(
     ) = createBoardUsecase.execute(request)
 
     @PutMapping("/{id}")
-    fun createBoard(
+    fun updateBoard(
         @PathVariable id: Long,
         @RequestBody request: UpdateBoardRequest
     ) = updateBoardUsecase.execute(
