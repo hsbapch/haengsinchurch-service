@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "Admin Board", description = "게시판")
+@Tag(name = "Admin Board", description = "게시판(관리자)")
 @RestController
 @RequestMapping("/admin/api/v1/boards")
 class AdminBoardController(

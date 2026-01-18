@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "Admin Board", description = "게시판")
+@Tag(name = "Board", description = "게시판")
 @RestController
 @RequestMapping("/api/v1/boards")
 class BoardController(

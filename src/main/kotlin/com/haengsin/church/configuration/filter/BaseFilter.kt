@@ -27,8 +27,11 @@ class BaseFilter : Filter {
         val req = request as HttpServletRequest
         val res = response as HttpServletResponse
 
-        // ✅ multipart는 래핑 금지(업로드 깨짐 방지)
-        if (req.contentType?.startsWith("multipart/") == true) {
+        if (
+            req.contentType?.startsWith("multipart/") == true
+            || req.requestURI.contains("/v3/api-docs")
+            || req.requestURI.startsWith("/actuator")
+        ) {
             chain.doFilter(req, res)
             return
         }
@@ -45,7 +48,6 @@ class BaseFilter : Filter {
             val requestBody = readRequestBody(wrappedReq)
             val responseBody = readResponseBody(wrappedRes)
 
-            // ✅ 예외 핸들러에서 꺼내 쓰게 request attribute로 저장
             req.setAttribute(ATTR_CACHED_REQUEST_BODY, requestBody)
             req.setAttribute(ATTR_TRACE_ID, traceId)
 
@@ -67,13 +69,11 @@ class BaseFilter : Filter {
         val bytes = res.contentAsByteArray
         if (bytes.isEmpty()) return ""
 
-        // 1) 압축된 응답이면 디코딩하지 않음 (깨짐 방지)
         val contentEncoding = res.getHeader("Content-Encoding")?.lowercase()
         if (contentEncoding == "gzip" || contentEncoding == "br" || contentEncoding == "deflate") {
             return "(encoded:$contentEncoding, ${bytes.size} bytes)"
         }
 
-        // 2) 텍스트 계열 Content-Type만 문자열로 변환
         val contentType = res.contentType?.lowercase() ?: ""
         val isText =
             contentType.startsWith("text/") ||
@@ -87,7 +87,6 @@ class BaseFilter : Filter {
             return "(binary:$contentType, ${bytes.size} bytes)"
         }
 
-        // 3) charset 결정: response.characterEncoding 우선, 없으면 Content-Type에서 추출, 그래도 없으면 UTF-8
         val charsetName = res.characterEncoding
             ?.takeIf { it.isNotBlank() }
             ?: extractCharset(contentType)

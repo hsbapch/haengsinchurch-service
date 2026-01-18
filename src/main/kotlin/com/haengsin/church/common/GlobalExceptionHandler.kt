@@ -140,6 +140,7 @@ class GlobalExceptionHandler(
         private const val ERROR_LOG_MESSAGE = "[ERROR] {} : {}"
 
         private val IGNORED_PATHS = setOf(
+            "/v3/api-docs",
             "/owa/auth/logon.aspx",
             "/robots.txt",
             "/favicon.ico",
