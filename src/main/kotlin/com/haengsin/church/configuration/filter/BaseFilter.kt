@@ -29,7 +29,7 @@ class BaseFilter : Filter {
 
         if (
             req.contentType?.startsWith("multipart/") == true
-            || req.requestURI.contains("/v3/api-docs")
+            || req.requestURI.startsWith("/v3/api-docs")
             || req.requestURI.startsWith("/actuator")
         ) {
             chain.doFilter(req, res)
