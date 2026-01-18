@@ -15,22 +15,9 @@ class DiscordNotifier(
     @Value("\${discord.error-webhook-url}")
     private lateinit var webhookUrl: String
 
-    fun send(title: String, description: String) {
-        val headers = HttpHeaders().apply {
-            contentType = MediaType.APPLICATION_JSON
-        }
-
-        val payload = mapOf(
-            "embeds" to listOf(
-                mapOf(
-                    "title" to title,
-                    "description" to description.take(5500)
-                )
-            )
-        )
-
+    fun send(payload: Map<String, Any>) {
+        val headers = HttpHeaders().apply { contentType = MediaType.APPLICATION_JSON }
         val entity = HttpEntity(payload, headers)
-
         runCatching {
             restTemplate.postForEntity(webhookUrl, entity, String::class.java)
         }
