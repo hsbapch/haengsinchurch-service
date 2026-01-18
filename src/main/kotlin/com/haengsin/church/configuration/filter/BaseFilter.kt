@@ -30,6 +30,7 @@ class BaseFilter : Filter {
         if (
             req.contentType?.startsWith("multipart/") == true
             || req.requestURI.startsWith("/v3/api-docs")
+            || req.requestURI.startsWith("/swagger-ui")
             || req.requestURI.startsWith("/actuator")
         ) {
             chain.doFilter(req, res)
