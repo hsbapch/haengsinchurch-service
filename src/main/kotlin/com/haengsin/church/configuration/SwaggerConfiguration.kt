@@ -12,7 +12,7 @@ class SwaggerConfiguration {
     fun baseApi(): GroupedOpenApi = GroupedOpenApi.builder()
         .group("ALL")
         .pathsToMatch(
-            "/static/**",
+            "/admin/**",
             "/api/**",
         )
         .addOpenApiCustomizer { openApi ->
