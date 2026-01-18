@@ -1,9 +1,13 @@
+import org.gradle.kotlin.dsl.withType
+
 plugins {
     kotlin("jvm") version "2.2.21"
     kotlin("plugin.spring") version "2.2.21"
     id("org.springframework.boot") version "4.0.1"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "2.2.21"
+    kotlin("kapt") version "2.2.21"
+    idea
 }
 
 group = "com.haengsin"
@@ -48,12 +52,12 @@ dependencies {
     implementation(platform("software.amazon.awssdk:bom:2.27.21"))
     implementation("software.amazon.awssdk:s3")
     implementation("software.amazon.awssdk:s3-transfer-manager")
-}
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
-    }
+    // queryDsl
+    implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+    kapt("jakarta.annotation:jakarta.annotation-api")
+    kapt("jakarta.persistence:jakarta.persistence-api")
 }
 
 allOpen {
@@ -62,6 +66,21 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xjsr305=strict")
+    }
+}
+
+idea {
+    module {
+        val kaptMain = file("build/generated/source/kapt/main")
+        sourceDirs.add(kaptMain)
+        generatedSourceDirs.add(kaptMain)
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+

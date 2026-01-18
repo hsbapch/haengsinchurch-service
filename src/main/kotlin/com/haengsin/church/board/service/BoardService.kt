@@ -1,8 +1,10 @@
 package com.haengsin.church.board.service
 
 import com.haengsin.church.board.entity.Board
+import com.haengsin.church.board.vo.BoardListRequest
 import com.haengsin.church.board.vo.CreateBoardRequest
 import com.haengsin.church.board.vo.UpdateBoardRequest
+import org.springframework.data.domain.Page
 
 interface BoardService {
 
@@ -15,4 +17,6 @@ interface BoardService {
     fun getBoard(id: Long): Board
 
     fun getLatestBoard(): Board?
+
+    fun getBoardList(boardListRequest: BoardListRequest):  Page<Board>
 }

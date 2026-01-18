@@ -1,6 +1,6 @@
 package com.haengsin.church.board.vo
 
-import com.haengsin.church.board.enum.ArticleType
+import com.haengsin.church.board.enums.ArticleType
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.OffsetDateTime
 

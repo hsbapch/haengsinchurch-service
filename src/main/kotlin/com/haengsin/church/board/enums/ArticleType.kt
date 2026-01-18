@@ -1,4 +1,4 @@
-package com.haengsin.church.board.enum
+package com.haengsin.church.board.enums
 
 enum class ArticleType(
     val description: String

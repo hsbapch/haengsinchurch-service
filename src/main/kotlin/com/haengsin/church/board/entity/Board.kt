@@ -1,12 +1,12 @@
 package com.haengsin.church.board.entity
 
-import com.haengsin.church.board.enum.ArticleType
+import com.haengsin.church.board.enums.ArticleType
 import com.haengsin.church.board.vo.UpdateBoardRequest
 import com.haengsin.church.common.BaseEntity
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.Lob
 import java.time.OffsetDateTime
 
 
@@ -20,13 +20,15 @@ class Board(
 ) : BaseEntity(id) {
 
 
+    @Column(nullable = false)
     var title: String = title
         protected set
 
+    @Column(nullable = false)
     var content: String = content
         protected set
 
-
+    @Column(nullable = true)
     var youtubeUrl: String? = youtubeUrl
         protected set
 
