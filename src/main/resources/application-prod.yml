@@ -21,6 +21,7 @@ spring:
         show_sql: true
     defer-datasource-initialization: false
 
+
 logging:
   level:
     com.delivered: INFO

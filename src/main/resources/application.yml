@@ -31,6 +31,9 @@ security:
     access-token-ttl-seconds: 3600
     refresh-token-ttl-seconds: 86400
 
+discord:
+  error-webhook-url: https://discord.com/api/webhooks/1462367693540823197/OD3poHe0OmJyk0i0yVptQX6NwonRYRmF_rpIZa0xKgRvZIUX1u-NFLYdakWJ4-cmPP5P
+
 aws:
   s3:
     bucket: hsbapch-storage
