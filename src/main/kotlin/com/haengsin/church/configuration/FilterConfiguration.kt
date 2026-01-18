@@ -1,7 +1,7 @@
 package com.haengsin.church.configuration
 
-import com.haengsin.church.configuration.filter.AccessLoggingFilter
 import com.haengsin.church.configuration.filter.AuthenticationFilter
+import com.haengsin.church.configuration.filter.BaseFilter
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,19 +20,11 @@ class FilterConfiguration {
 
     @Bean
     fun requestWrappingFilterRegistration(
-        filter: AccessLoggingFilter
-    ): FilterRegistrationBean<AccessLoggingFilter> =
+        filter: BaseFilter
+    ): FilterRegistrationBean<BaseFilter> =
         FilterRegistrationBean(filter).also {
             it.addUrlPatterns("/*")
             it.order = 1
         }
 
-    @Bean
-    fun accessLoggingFilterRegistration(
-        accessLoggingFilter: AccessLoggingFilter
-    ): FilterRegistrationBean<AccessLoggingFilter> =
-        FilterRegistrationBean(accessLoggingFilter).also {
-            it.addUrlPatterns("/*")
-            it.order = 0
-        }
 }
