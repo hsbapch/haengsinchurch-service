@@ -27,7 +27,7 @@ class AuthenticationFilter(
         filterChain: FilterChain
     ) {
 
-        if (
+        if (request.method.equals("OPTIONS", true) ||
             !request.requestURI.startsWith("/admin") ||
             BYPASS_URLS.any { request.requestURI.contains(it) }
         ) {
