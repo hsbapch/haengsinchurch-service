@@ -25,18 +25,18 @@ class CookieProvider {
     private fun createRefreshTokenCookie(token: Token): ResponseCookie =
         ResponseCookie.from("REFRESH_TOKEN", token.refreshToken)
             .httpOnly(true)
-            .secure(true)
             .path("/")
-            .sameSite("Lax")
+            .sameSite("None")
+            .secure(true)
             .maxAge(Duration.ofSeconds(token.refreshTokenExpiresIn))
             .build()
 
     private fun createAccessTokenCookie(token: Token): ResponseCookie =
         ResponseCookie.from("ACCESS_TOKEN", token.accessToken)
             .httpOnly(true)
+            .sameSite("None")
             .secure(true)
             .path("/")
-            .sameSite("Lax")
             .maxAge(Duration.ofSeconds(token.accessTokenExpiresIn))
             .build()
 
