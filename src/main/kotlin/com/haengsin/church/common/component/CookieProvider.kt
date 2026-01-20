@@ -10,34 +10,50 @@ import java.time.Duration
 @Component
 class CookieProvider {
 
-    fun createTokenToCookie(token: Token): List<ResponseCookie> =
-        listOf(
-            createAccessTokenCookie(token),
-            createRefreshTokenCookie(token)
-        )
+    fun createTokenToCookie(token: Token): ResponseCookie =
+            createAccessTokenCookie(token)
+
+    fun deleteTokenCookie(response: HttpServletResponse) =
+        deleteAccessTokenCookie()
+            .let { response.addHeader("Set-Cookie", it.toString()) }
 
     fun addCookieToHeader(
         token: Token,
         response: HttpServletResponse
     ) = createTokenToCookie(token)
-        .forEach { response.addHeader("Set-Cookie", it.toString()) }
+        .let { response.addHeader("Set-Cookie", it.toString()) }
 
     private fun createRefreshTokenCookie(token: Token): ResponseCookie =
-        ResponseCookie.from("REFRESH_TOKEN", token.refreshToken)
-            .httpOnly(true)
-            .path("/")
-            .sameSite("None")
-            .secure(true)
-            .maxAge(Duration.ofSeconds(token.refreshTokenExpiresIn))
-            .build()
+        baseCookie(
+            name = "REFRESH_TOKEN",
+            value = token.refreshToken,
+            maxAge = Duration.ofSeconds(token.refreshTokenExpiresIn)
+        )
 
     private fun createAccessTokenCookie(token: Token): ResponseCookie =
-        ResponseCookie.from("ACCESS_TOKEN", token.accessToken)
+        baseCookie(
+            name = "ACCESS_TOKEN",
+            value = token.accessToken,
+            maxAge = Duration.ofSeconds(token.accessTokenExpiresIn)
+        )
+
+    private fun deleteAccessTokenCookie(): ResponseCookie =
+        baseCookie(
+            name = "ACCESS_TOKEN",
+            value = "",
+            maxAge = Duration.ZERO
+        )
+
+    private fun baseCookie(
+        name: String,
+        value: String,
+        maxAge: Duration
+    ): ResponseCookie =
+        ResponseCookie.from(name, value)
             .httpOnly(true)
-            .sameSite("None")
             .secure(true)
             .path("/")
-            .maxAge(Duration.ofSeconds(token.accessTokenExpiresIn))
+            .sameSite("None")
+            .maxAge(maxAge)
             .build()
-
 }

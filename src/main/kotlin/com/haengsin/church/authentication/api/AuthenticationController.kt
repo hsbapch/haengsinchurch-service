@@ -28,6 +28,9 @@ class AuthenticationController(
         .also { addTokenCookieToHeader(response, it) }
         .run { AuthenticationResponse(accessTokenExpiresIn, expiredAt) }
 
+    @PostMapping("/sign-out")
+    fun signOut(response: HttpServletResponse) = cookieProvider.deleteTokenCookie(response)
+
 
     private fun addTokenCookieToHeader(response: HttpServletResponse, token: Token) {
         cookieProvider.createTokenToCookie(token)
