@@ -44,20 +44,20 @@ class AuthenticationFilter(
         response: HttpServletResponse
     ) {
         val accessToken = request.cookies?.find { it.name == "ACCESS_TOKEN" }?.value
-        val refreshToken = request.cookies?.find { it.name == "REFRESH_TOKEN" }?.value
+//        val refreshToken = request.cookies?.find { it.name == "REFRESH_TOKEN" }?.value
 
-        if (accessToken == null || refreshToken == null) {
+        if (accessToken == null) {
             throw TokenNotProvidedException()
         }
 
 //        jwtTokenProvider.validateToken(accessToken)
 
-        if (jwtTokenProvider.isReissueNeeded(accessToken)) {
-            jwtTokenProvider.reissueAccessTokenByRefreshToken(refreshToken)
-                .let { cookieProvider.addCookieToHeader(it, response) }
-        } else {
-            return
-        }
+//        if (jwtTokenProvider.isReissueNeeded(accessToken)) {
+//            jwtTokenProvider.reissueAccessTokenByRefreshToken(refreshToken)
+////                .let { cookieProvider.addCookieToHeader(it, response) }
+//        } else {
+//            return
+//        }
     }
 
     companion object {
