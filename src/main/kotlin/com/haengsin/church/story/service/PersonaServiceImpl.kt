@@ -29,7 +29,7 @@ class PersonaServiceImpl(
 
     override fun getAllPersonas(): List<Persona> =
         personaRepository.findAll()
-            .takeIf(List<Persona>::isEmpty)
+            .takeIf(List<Persona>::isNotEmpty)
             ?: emptyList()
 
 }

@@ -47,6 +47,6 @@ class StoryServiceImpl(
 
     override fun getAllStories(): List<Story> =
         storyRepository.findAll()
-            .takeIf(List<Story>::isEmpty)
+            .takeIf(List<Story>::isNotEmpty)
             ?: emptyList()
 }
