@@ -1,9 +1,11 @@
 package com.haengsin.church.story.api
 
+import com.haengsin.church.story.usecase.CreatePersonaUsecase
 import com.haengsin.church.story.usecase.CreateStoryUsecase
 import com.haengsin.church.story.usecase.DeleteStoryUsecase
 import com.haengsin.church.story.usecase.GetAllPersonaUsecase
 import com.haengsin.church.story.usecase.UpdateStoryUsecase
+import com.haengsin.church.story.vo.CreatePersonaRequest
 import com.haengsin.church.story.vo.CreateStoryRequest
 import com.haengsin.church.story.vo.UpdateStoryRequest
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -24,6 +26,7 @@ class AdminStoryController(
     private val updateStoryUsecase: UpdateStoryUsecase,
     private val deleteStoryUsecase: DeleteStoryUsecase,
     private val getAllPersonaUsecase: GetAllPersonaUsecase,
+    private val createPersonaUsecase: CreatePersonaUsecase,
 ) {
 
     @PostMapping
@@ -50,8 +53,8 @@ class AdminStoryController(
 
     @PostMapping("/persona")
     fun createPersona(
-        @RequestBody request: CreateStoryRequest
-    ) = createStoryUsecase.execute(request)
+        @RequestBody request: CreatePersonaRequest
+    ) = createPersonaUsecase.execute(request)
 
 
     @GetMapping("/persona/all")
