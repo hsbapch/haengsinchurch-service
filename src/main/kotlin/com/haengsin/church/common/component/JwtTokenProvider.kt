@@ -23,7 +23,7 @@ class JwtTokenProvider(
 ) {
 
     fun issueToken(userId: Long): Token =
-        OffsetDateUtils.now().let {
+        OffsetDateUtils.toSeoul(OffsetDateTime.now()).let {
             Token(
                 accessToken = issueAccessToken(userId, it),
                 accessTokenExpiresIn = accessTokenExpiresIn,
@@ -39,7 +39,7 @@ class JwtTokenProvider(
             accessTokenExpiresIn = 0L,
             refreshToken = "",
             refreshTokenExpiresIn = 0L,
-            issuedAt = OffsetDateUtils.now(),
+            issuedAt = OffsetDateUtils.toSeoul(OffsetDateTime.now()),
         )
 
 

@@ -35,6 +35,6 @@ class Story(
     ) {
         this.title = updateStoryRequest.title
         this.content = updateStoryRequest.content
-        this.updatedAt = OffsetDateUtils.now()
+        this.updatedAt = OffsetDateUtils.toSeoul(OffsetDateTime.now())
     }
 }

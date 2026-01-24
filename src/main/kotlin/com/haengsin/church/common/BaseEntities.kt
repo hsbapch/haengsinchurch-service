@@ -42,12 +42,12 @@ abstract class BaseTimeEntity(
 ) : PrimaryKeyEntity(id) {
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    var createdAt: OffsetDateTime = OffsetDateUtils.now()
+    var createdAt: OffsetDateTime = OffsetDateUtils.toSeoul(OffsetDateTime.now())
         protected set
 
     @LastModifiedDate
     @Column(nullable = false)
-    var updatedAt: OffsetDateTime = OffsetDateUtils.now()
+    var updatedAt: OffsetDateTime = OffsetDateUtils.toSeoul(OffsetDateTime.now())
         protected set
 }
 

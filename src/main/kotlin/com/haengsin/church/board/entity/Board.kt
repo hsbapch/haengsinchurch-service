@@ -43,6 +43,6 @@ class Board(
         this.content = updateBoardRequest.content
         this.youtubeUrl = updateBoardRequest.youtubeUrl
         this.articleType = updateBoardRequest.articleType
-        this.updatedAt = OffsetDateUtils.now()
+        this.updatedAt = OffsetDateUtils.toSeoul(OffsetDateTime.now())
     }
 }
