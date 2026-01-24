@@ -26,23 +26,23 @@ class GlobalExceptionHandler(
 ) {
     private val log = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
-    @ExceptionHandler(Exception::class)
-    fun handleException(e: Exception, request: HttpServletRequest): ResponseEntity<Map<String, Any>> {
-
-        if (shouldIgnoreNoResource(e, request.requestURI)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "not found"))
-        }
-
-        notifyIfProd(
-            title = "Server Error (500)",
-            e = e,
-            request = request,
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
-        )
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(mapOf("message" to "internal error"))
-    }
+//    @ExceptionHandler(Exception::class)
+//    fun handleException(e: Exception, request: HttpServletRequest): ResponseEntity<Map<String, Any>> {
+//
+//        if (shouldIgnoreNoResource(e, request.requestURI)) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "not found"))
+//        }
+//
+//        notifyIfProd(
+//            title = "Server Error (500)",
+//            e = e,
+//            request = request,
+//            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
+//        )
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//            .body(mapOf("message" to "internal error"))
+//    }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleException(e: HttpMessageNotReadableException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {

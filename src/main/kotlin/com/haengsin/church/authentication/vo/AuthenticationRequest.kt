@@ -8,12 +8,10 @@ data class SignInRequest (
 
     @field:Schema(description = "아이디")
     @field:NotBlank
-    @field:Email
     val username: String,
 
     @field:Schema(description = "비밀번호")
     @field:NotBlank
-    @field:Email
     val password: String
 
 )

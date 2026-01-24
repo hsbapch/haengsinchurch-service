@@ -40,12 +40,15 @@ abstract class PrimaryKeyEntity(
 abstract class BaseTimeEntity(
     id: Long = 0L,
 ) : PrimaryKeyEntity(id) {
+
     @CreatedDate
+    @field:Convert(converter = OffsetDateTimeAttributeConverter::class)
     @Column(nullable = false, updatable = false)
     var createdAt: OffsetDateTime = OffsetDateUtils.toSeoul(OffsetDateTime.now())
         protected set
 
     @LastModifiedDate
+    @field:Convert(converter = OffsetDateTimeAttributeConverter::class)
     @Column(nullable = false)
     var updatedAt: OffsetDateTime = OffsetDateUtils.toSeoul(OffsetDateTime.now())
         protected set
