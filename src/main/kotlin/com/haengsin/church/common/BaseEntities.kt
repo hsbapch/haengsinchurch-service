@@ -1,5 +1,6 @@
 package com.haengsin.church.common
 
+import com.haengsin.church.util.OffsetDateUtils
 import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
 import org.springframework.data.annotation.CreatedBy
@@ -41,12 +42,12 @@ abstract class BaseTimeEntity(
 ) : PrimaryKeyEntity(id) {
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    var createdAt: OffsetDateTime = OffsetDateTime.now()
+    var createdAt: OffsetDateTime = OffsetDateUtils.now()
         protected set
 
     @LastModifiedDate
     @Column(nullable = false)
-    var updatedAt: OffsetDateTime = OffsetDateTime.now()
+    var updatedAt: OffsetDateTime = OffsetDateUtils.now()
         protected set
 }
 

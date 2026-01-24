@@ -2,6 +2,7 @@ package com.haengsin.church.common.component
 
 import com.haengsin.church.authentication.dto.Token
 import com.haengsin.church.authentication.expection.TokenNotProvidedException
+import com.haengsin.church.util.OffsetDateUtils
 import com.haengsin.church.util.SecureUtils
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
@@ -22,7 +23,7 @@ class JwtTokenProvider(
 ) {
 
     fun issueToken(userId: Long): Token =
-        OffsetDateTime.now().let {
+        OffsetDateUtils.now().let {
             Token(
                 accessToken = issueAccessToken(userId, it),
                 accessTokenExpiresIn = accessTokenExpiresIn,
@@ -38,7 +39,7 @@ class JwtTokenProvider(
             accessTokenExpiresIn = 0L,
             refreshToken = "",
             refreshTokenExpiresIn = 0L,
-            issuedAt = OffsetDateTime.now(),
+            issuedAt = OffsetDateUtils.now(),
         )
 
 

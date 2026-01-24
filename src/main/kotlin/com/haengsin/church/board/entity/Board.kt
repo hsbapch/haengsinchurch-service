@@ -3,6 +3,7 @@ package com.haengsin.church.board.entity
 import com.haengsin.church.board.enums.ArticleType
 import com.haengsin.church.board.vo.UpdateBoardRequest
 import com.haengsin.church.common.BaseEntity
+import com.haengsin.church.util.OffsetDateUtils
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -42,6 +43,6 @@ class Board(
         this.content = updateBoardRequest.content
         this.youtubeUrl = updateBoardRequest.youtubeUrl
         this.articleType = updateBoardRequest.articleType
-        this.updatedAt = OffsetDateTime.now()
+        this.updatedAt = OffsetDateUtils.now()
     }
 }

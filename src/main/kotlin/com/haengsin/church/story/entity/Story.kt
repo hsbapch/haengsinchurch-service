@@ -2,6 +2,7 @@ package com.haengsin.church.story.entity
 
 import com.haengsin.church.common.BaseEntity
 import com.haengsin.church.story.vo.UpdateStoryRequest
+import com.haengsin.church.util.OffsetDateUtils
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -34,6 +35,6 @@ class Story(
     ) {
         this.title = updateStoryRequest.title
         this.content = updateStoryRequest.content
-        this.updatedAt = OffsetDateTime.now()
+        this.updatedAt = OffsetDateUtils.now()
     }
 }

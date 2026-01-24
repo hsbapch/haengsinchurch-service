@@ -1,7 +1,6 @@
 package com.haengsin.church.story.service
 
 import com.haengsin.church.story.entity.Persona
-import com.haengsin.church.story.entity.Story
 import com.haengsin.church.story.exception.PersonaNotFoundException
 import com.haengsin.church.story.repository.PersonaRepository
 import jakarta.transaction.Transactional
