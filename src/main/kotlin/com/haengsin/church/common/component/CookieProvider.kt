@@ -2,6 +2,7 @@ package com.haengsin.church.common.component
 
 import com.haengsin.church.authentication.dto.Token
 import com.haengsin.church.authentication.vo.AuthenticationResponse
+import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseCookie
 import org.springframework.stereotype.Component
@@ -16,11 +17,12 @@ class CookieProvider {
             createRefreshTokenCookie(token)
         )
 
-    fun addCookieToHeader(
-        token: Token,
-        response: HttpServletResponse
-    ) = createTokenToCookie(token)
-        .let { response.addHeader("Set-Cookie", it.toString()) }
+    fun addCookieToResponse(cookies: List<ResponseCookie>, response: HttpServletResponse) {
+        cookies.forEach {
+            response.addHeader("Set-Cookie", it.toString())
+        }
+
+    }
 
     private fun createRefreshTokenCookie(token: Token): ResponseCookie =
         baseCookie(

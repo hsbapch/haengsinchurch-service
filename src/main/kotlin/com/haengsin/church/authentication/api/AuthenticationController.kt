@@ -38,7 +38,7 @@ class AuthenticationController(
     @PostMapping("/sign-out")
     fun signOut(
         response: HttpServletResponse
-    ) = tokenResponse(
+    ):AuthenticationResponse = tokenResponse(
         token = deleteTokenUsecase.execute(Unit),
         response = response
     )
@@ -47,14 +47,14 @@ class AuthenticationController(
     fun refreshToken(
         request: HttpServletRequest,
         response: HttpServletResponse
-    ) = tokenResponse(
+    ):AuthenticationResponse = tokenResponse(
         token = reissueAccessTokenUsecase.execute(request),
         response = response
     )
 
     private fun addTokenCookieToHeader(response: HttpServletResponse, token: Token) {
         cookieProvider.createTokenToCookie(token)
-            .let { cookieProvider.addCookieToHeader(token, response) }
+            .let { cookieProvider.addCookieToResponse(it, response) }
     }
 
     private fun tokenResponse(token: Token, response: HttpServletResponse): AuthenticationResponse =
