@@ -1,6 +1,7 @@
 package com.haengsin.church.common.component
 
 import com.haengsin.church.authentication.dto.Token
+import com.haengsin.church.authentication.expection.TokenNotProvidedException
 import com.haengsin.church.util.SecureUtils
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
@@ -31,23 +32,15 @@ class JwtTokenProvider(
             )
         }
 
+    fun issueDeleteToken(): Token =
+        Token(
+            accessToken = "",
+            accessTokenExpiresIn = 0L,
+            refreshToken = "",
+            refreshTokenExpiresIn = 0L,
+            issuedAt = OffsetDateTime.now(),
+        )
 
-    fun isReissueNeeded(token: String): Boolean {
-        return try {
-            val claims = Jwts.parserBuilder()
-                .setSigningKey(SecureUtils.toHmacShaKey(secretKey))
-                .setAllowedClockSkewSeconds(60)
-                .build()
-                .parseClaimsJws(token)
-                .body
-            val expiration = claims.expiration.toInstant().atOffset(OffsetDateTime.now().offset)
-            val now = OffsetDateTime.now()
-            val reissueThreshold = expiration.minusSeconds(accessTokenExpiresIn / 10)
-            now.isAfter(reissueThreshold)
-        } catch (e: ExpiredJwtException) {
-            true
-        }
-    }
 
     fun reissueAccessTokenByRefreshToken(token: String): Token {
         val claims = Jwts.parserBuilder()
@@ -58,6 +51,19 @@ class JwtTokenProvider(
             .body
         val userId = claims["uid"].toString().toLong()
         return issueToken(userId)
+    }
+
+    fun validateToken(token: String): Boolean {
+        return try {
+            Jwts.parserBuilder()
+                .setSigningKey(SecureUtils.toHmacShaKey(secretKey))
+                .setAllowedClockSkewSeconds(60)
+                .build()
+                .parseClaimsJws(token)
+            true
+        } catch (e: Exception) {
+            throw TokenNotProvidedException()
+        }
     }
 
 

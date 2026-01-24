@@ -2,10 +2,14 @@ package com.haengsin.church.authentication.api
 
 import com.haengsin.church.common.component.CookieProvider
 import com.haengsin.church.authentication.dto.Token
+import com.haengsin.church.authentication.usecase.DeleteTokenUsecase
+import com.haengsin.church.authentication.usecase.ReissueAccessTokenUsecase
 import com.haengsin.church.authentication.vo.SignInRequest
 import com.haengsin.church.authentication.usecase.SignInUsecase
 import com.haengsin.church.authentication.vo.AuthenticationResponse
+import com.haengsin.church.common.component.JwtTokenProvider
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,24 +22,45 @@ import org.springframework.web.bind.annotation.RestController
 class AuthenticationController(
     private val signInUsecase: SignInUsecase,
     private val cookieProvider: CookieProvider,
+    private val reissueAccessTokenUsecase: ReissueAccessTokenUsecase,
+    private val deleteTokenUsecase: DeleteTokenUsecase,
 ) {
 
     @PostMapping("/sign-in")
     fun signIn(
         @RequestBody request: SignInRequest,
         response: HttpServletResponse
-    ): AuthenticationResponse = signInUsecase.execute(request)
-        .also { addTokenCookieToHeader(response, it) }
-        .run { AuthenticationResponse(accessTokenExpiresIn, expiredAt) }
+    ): AuthenticationResponse = tokenResponse(
+        token = signInUsecase.execute(request),
+        response = response
+    )
 
     @PostMapping("/sign-out")
-    fun signOut(response: HttpServletResponse) = cookieProvider.deleteTokenCookie(response)
+    fun signOut(
+        response: HttpServletResponse
+    ) = tokenResponse(
+        token = deleteTokenUsecase.execute(Unit),
+        response = response
+    )
 
+    @PostMapping("/refresh-token")
+    fun refreshToken(
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ) = tokenResponse(
+        token = reissueAccessTokenUsecase.execute(request),
+        response = response
+    )
 
     private fun addTokenCookieToHeader(response: HttpServletResponse, token: Token) {
         cookieProvider.createTokenToCookie(token)
             .let { cookieProvider.addCookieToHeader(token, response) }
     }
+
+    private fun tokenResponse(token: Token, response: HttpServletResponse): AuthenticationResponse =
+        token
+            .also { addTokenCookieToHeader(response, it) }
+            .run { AuthenticationResponse(accessTokenExpiresIn, expiredAt) }
 
 
 }

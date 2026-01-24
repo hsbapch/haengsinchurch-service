@@ -15,10 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)
-class AuthenticationFilter(
-    private val jwtTokenProvider: JwtTokenProvider,
-    private val cookieProvider: CookieProvider
-) : OncePerRequestFilter() {
+class AuthenticationFilter : OncePerRequestFilter() {
 
 
     override fun doFilterInternal(
@@ -35,29 +32,19 @@ class AuthenticationFilter(
             return
         }
 
-        resolveToken(request, response)
+        validateToken(request)
         filterChain.doFilter(request, response)
     }
 
-    private fun resolveToken(
+    private fun validateToken(
         request: HttpServletRequest,
-        response: HttpServletResponse
     ) {
         val accessToken = request.cookies?.find { it.name == "ACCESS_TOKEN" }?.value
-//        val refreshToken = request.cookies?.find { it.name == "REFRESH_TOKEN" }?.value
+        val refreshToken = request.cookies?.find { it.name == "REFRESH_TOKEN" }?.value
 
-        if (accessToken == null) {
-            throw TokenNotProvidedException()
-        }
+        if (accessToken == null && refreshToken == null) throw TokenNotProvidedException()
 
-//        jwtTokenProvider.validateToken(accessToken)
 
-//        if (jwtTokenProvider.isReissueNeeded(accessToken)) {
-//            jwtTokenProvider.reissueAccessTokenByRefreshToken(refreshToken)
-////                .let { cookieProvider.addCookieToHeader(it, response) }
-//        } else {
-//            return
-//        }
     }
 
     companion object {
