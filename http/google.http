@@ -1,2 +1,64 @@
+### playlist items 가져오기
 GET https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=PLoE5IEOib3i8lXx9J3Ce1JSlcX17Umwv_
 x-goog-api-key: AIzaSyCCpfl0TVqidEjoExH7erRW7q-0NVHvbtQ
+
+
+### 라이브 중일때
+GET https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCkIJrDEmpp4y3qGEiGyquTA&type=video&eventType=live
+x-goog-api-key: AIzaSyCCpfl0TVqidEjoExH7erRW7q-0NVHvbtQ
+
+
+### 아이디 가져오기
+GET https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=@hsbapch
+x-goog-api-key: AIzaSyCCpfl0TVqidEjoExH7erRW7q-0NVHvbtQ
+
+
+### 채널 아이디 : UCkIJrDEmpp4y3qGEiGyquTA
+
+
+### 라이브 중일때 response
+#{
+#  "kind": "youtube#searchListResponse",
+#  "etag": "QaFetk1qcm1T6C-HNXNCM9QgGcU",
+#  "regionCode": "KR",
+#  "pageInfo": {
+#    "totalResults": 1,
+#    "resultsPerPage": 1
+#  },
+#  "items": [
+#    {
+#      "kind": "youtube#searchResult",
+#      "etag": "_Ahxhm714U2ZhA1uI5fZa7REa2M",
+#      "id": {
+#        "kind": "youtube#video",
+#        "videoId": "zA5Gsei8NvM"
+#      },
+#      "snippet": {
+#        "publishedAt": "2026-01-24T04:20:30Z",
+#        "channelId": "UCJJZkVUNIxq8XNDzHiAD-eQ",
+#        "title": "1000만골드 발키리 1740찍고 나메 클리어시 30시간 차감   로스트아크 쫀지",
+#        "description": "로스트아크 #로아 #쫀지#아이온2 #아이온.",
+#        "thumbnails": {
+#          "default": {
+#            "url": "https://i.ytimg.com/vi/zA5Gsei8NvM/default_live.jpg",
+#            "width": 120,
+#            "height": 90
+#          },
+#          "medium": {
+#            "url": "https://i.ytimg.com/vi/zA5Gsei8NvM/mqdefault_live.jpg",
+#            "width": 320,
+#            "height": 180
+#          },
+#          "high": {
+#            "url": "https://i.ytimg.com/vi/zA5Gsei8NvM/hqdefault_live.jpg",
+#            "width": 480,
+#            "height": 360
+#          }
+#        },
+#        "channelTitle": "쫀지",
+#        "liveBroadcastContent": "live",
+#        "publishTime": "2026-01-24T04:20:30Z"
+#      }
+#    }
+#  ]
+#}

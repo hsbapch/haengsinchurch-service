@@ -18,5 +18,7 @@ interface BoardService {
 
     fun getLatestBoard(): Board?
 
+    fun getLatestBulletin(): Board
+
     fun getBoardList(boardListRequest: BoardListRequest):  Page<Board>
 }

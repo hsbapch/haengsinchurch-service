@@ -2,6 +2,7 @@ package com.haengsin.church.board.service
 
 import com.haengsin.church.board.entity.Board
 import com.haengsin.church.board.exception.BoardNotFoundException
+import com.haengsin.church.board.exception.BulletinNotFoundException
 import com.haengsin.church.board.mapper.BoardMapper
 import com.haengsin.church.board.repository.BoardRepository
 import com.haengsin.church.board.repository.BoardRepositoryQuery
@@ -43,6 +44,10 @@ class BoardServiceImpl(
 
     override fun getLatestBoard(): Board? =
         boardRepository.findFirstByOrderByCreatedAtDesc()
+
+    override fun getLatestBulletin(): Board =
+        boardRepository.findFirstByArticleTypeOrderByCreatedAtDesc()
+            ?: throw BulletinNotFoundException()
 
     override fun getBoardList(boardListRequest: BoardListRequest): Page<Board> =
         boardRepositoryQuery.findByPagination(boardListRequest, boardListRequest.toPageable())

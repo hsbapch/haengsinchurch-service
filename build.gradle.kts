@@ -1,5 +1,6 @@
 import org.gradle.kotlin.dsl.withType
 
+
 plugins {
     kotlin("jvm") version "2.2.21"
     kotlin("plugin.spring") version "2.2.21"
@@ -24,6 +25,14 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2025.1.0")
+    }
+}
+
+
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-flyway")
@@ -37,6 +46,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+// Source: https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
 
     // swagger
     implementation(platform("org.springdoc:springdoc-openapi-bom:3.0.1"))

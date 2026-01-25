@@ -36,6 +36,12 @@ security:
 discord:
   error-webhook-url: https://discord.com/api/webhooks/1462367693540823197/OD3poHe0OmJyk0i0yVptQX6NwonRYRmF_rpIZa0xKgRvZIUX1u-NFLYdakWJ4-cmPP5P
 
+youtube:
+  url: https://www.googleapis.com/youtube
+  x-goog-api-key: AIzaSyCCpfl0TVqidEjoExH7erRW7q-0NVHvbtQ
+  channel-id: UCkIJrDEmpp4y3qGEiGyquTA
+  playlist-id: PLoE5IEOib3i8lXx9J3Ce1JSlcX17Umwv_
+
 aws:
   s3:
     bucket: hsbapch-storage
