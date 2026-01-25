@@ -1,7 +1,8 @@
 package com.haengsin.church.common.component
 
-import com.haengsin.church.authentication.dto.Token
-import com.haengsin.church.authentication.expection.TokenNotProvidedException
+
+import com.haengsin.church.domain.authentication.dto.Token
+import com.haengsin.church.domain.authentication.expection.TokenNotProvidedException
 import com.haengsin.church.util.OffsetDateUtils
 import com.haengsin.church.util.SecureUtils
 import io.jsonwebtoken.ExpiredJwtException

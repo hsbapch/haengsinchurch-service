@@ -1,7 +1,7 @@
 package com.haengsin.church.common.component
 
-import com.haengsin.church.authentication.dto.Token
-import com.haengsin.church.authentication.vo.AuthenticationResponse
+
+import com.haengsin.church.domain.authentication.dto.Token
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.ResponseCookie

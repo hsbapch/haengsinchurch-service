@@ -1,9 +1,8 @@
 package com.haengsin.church.configuration.filter
 
 
-import com.haengsin.church.common.component.CookieProvider
-import com.haengsin.church.common.component.JwtTokenProvider
-import com.haengsin.church.authentication.expection.TokenNotProvidedException
+
+import com.haengsin.church.domain.authentication.expection.TokenNotProvidedException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
