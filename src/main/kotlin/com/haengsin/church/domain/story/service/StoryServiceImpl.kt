@@ -5,14 +5,18 @@ import com.haengsin.church.domain.story.entity.Persona
 import com.haengsin.church.domain.story.entity.Story
 import com.haengsin.church.domain.story.exception.StoryNotFoundException
 import com.haengsin.church.domain.story.repository.StoryRepository
+import com.haengsin.church.domain.story.repository.StoryRepositoryQuery
+import com.haengsin.church.domain.story.vo.GetStoryListRequest
 import com.haengsin.church.domain.story.vo.UpdateStoryRequest
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Page
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
 class StoryServiceImpl(
-    private val storyRepository: StoryRepository
+    private val storyRepository: StoryRepository,
+    private val storyRepositoryQuery: StoryRepositoryQuery,
 ) : StoryService {
 
     @Transactional
@@ -44,6 +48,9 @@ class StoryServiceImpl(
     override fun getStory(id: Long): Story =
         storyRepository.findByIdOrNull(id)
             ?: throw StoryNotFoundException(id)
+
+    override fun getStoryList(request: GetStoryListRequest): Page<Story> =
+        storyRepositoryQuery.findByPagination(request.toPageable())
 
 
     override fun getAllStories(): List<Story> =
