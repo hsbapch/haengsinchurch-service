@@ -30,7 +30,7 @@ spring:
 security:
   jwt:
     secret: hschurchhschurch
-    access-token-ttl-seconds: 3600
+    access-token-ttl-seconds: 36000
     refresh-token-ttl-seconds: 86400
 
 discord:
