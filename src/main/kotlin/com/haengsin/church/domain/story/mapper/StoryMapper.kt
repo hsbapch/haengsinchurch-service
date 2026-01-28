@@ -18,6 +18,7 @@ object StoryMapper {
     fun toStoryResponse(
         story: Story
     ): StoryResponse = StoryResponse(
+        id = story.id,
         title = story.title,
         content = story.content,
         personaImageUrl = story.persona.imageUrl
