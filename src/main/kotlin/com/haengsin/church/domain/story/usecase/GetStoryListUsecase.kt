@@ -14,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional
 @Usecase
 class GetStoryListUsecase(
     private val storyService: StoryService
-) : UsecaseInterface<GetStoryListRequest,  PageResponse<Story>> {
+) : UsecaseInterface<GetStoryListRequest,  PageResponse<StoryResponse>> {
 
 
     @Transactional(readOnly = true)
-    override fun execute(input: GetStoryListRequest):  PageResponse<Story> =
+    override fun execute(input: GetStoryListRequest):  PageResponse<StoryResponse> =
         storyService.getStoryList(input)
+            .map(StoryMapper::toStoryResponse)
             .let(PageResponse.Companion::from)
+
 
 }
