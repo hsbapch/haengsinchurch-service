@@ -30,8 +30,8 @@ spring:
 security:
   jwt:
     secret: hschurchhschurch
-    access-token-ttl-seconds: 36000
-    refresh-token-ttl-seconds: 86400
+    access-token-ttl-seconds: 36000000000
+    refresh-token-ttl-seconds: 86400000000
 
 discord:
   error-webhook-url: https://discord.com/api/webhooks/1462367693540823197/OD3poHe0OmJyk0i0yVptQX6NwonRYRmF_rpIZa0xKgRvZIUX1u-NFLYdakWJ4-cmPP5P
