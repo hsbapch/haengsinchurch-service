@@ -9,9 +9,10 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
+import org.hibernate.annotations.SQLRestriction
 import java.time.OffsetDateTime
 
-
+@SQLRestriction("is_deleted = false")
 @Entity
 class Board(
     title: String,
