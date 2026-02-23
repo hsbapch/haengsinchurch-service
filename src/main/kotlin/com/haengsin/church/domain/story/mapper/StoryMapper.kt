@@ -21,7 +21,7 @@ object StoryMapper {
         id = story.id,
         title = story.title,
         content = story.content,
-        personaImageUrl = story.persona.imageUrl
+        personaImageUrl = story.personaUrl
 
     )
 }

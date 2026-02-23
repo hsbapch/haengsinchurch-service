@@ -3,11 +3,14 @@ package com.haengsin.church.domain.story.api
 
 import com.haengsin.church.domain.story.usecase.CreatePersonaUsecase
 import com.haengsin.church.domain.story.usecase.CreateStoryUsecase
+import com.haengsin.church.domain.story.usecase.DeletePersonaUsecase
 import com.haengsin.church.domain.story.usecase.DeleteStoryUsecase
 import com.haengsin.church.domain.story.usecase.GetAllPersonaUsecase
+import com.haengsin.church.domain.story.usecase.UpdatePersonaUsecase
 import com.haengsin.church.domain.story.usecase.UpdateStoryUsecase
 import com.haengsin.church.domain.story.vo.CreatePersonaRequest
 import com.haengsin.church.domain.story.vo.CreateStoryRequest
+import com.haengsin.church.domain.story.vo.UpdatePersonaRequest
 import com.haengsin.church.domain.story.vo.UpdateStoryRequest
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -28,6 +31,8 @@ class AdminStoryController(
     private val deleteStoryUsecase: DeleteStoryUsecase,
     private val getAllPersonaUsecase: GetAllPersonaUsecase,
     private val createPersonaUsecase: CreatePersonaUsecase,
+    private val updatePersonaUsecase: UpdatePersonaUsecase,
+    private val deletePersonaUsecase: DeletePersonaUsecase,
 ) {
 
     @PostMapping
@@ -57,8 +62,25 @@ class AdminStoryController(
         @RequestBody request: CreatePersonaRequest
     ) = createPersonaUsecase.execute(request)
 
+    @PutMapping("/persona/{personaId}")
+    fun updatePersona(
+        @PathVariable personaId: Long,
+        @RequestBody request: UpdatePersonaRequest
+    ) = updatePersonaUsecase.execute(
+        UpdatePersonaUsecase.Input(
+            id = personaId,
+            request = request
+        )
+    )
+
+    @DeleteMapping("/persona/{personaId}")
+    fun deletePersona(
+        @PathVariable personaId: Long,
+    ) = deletePersonaUsecase.execute(personaId)
+
 
     @GetMapping("/persona/all")
     fun getAllPersona() = getAllPersonaUsecase.execute(Unit)
 
 }
+

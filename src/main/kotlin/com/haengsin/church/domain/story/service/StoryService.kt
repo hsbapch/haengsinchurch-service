@@ -18,6 +18,7 @@ interface StoryService {
 
     fun delete(story: Story)
 
+
     fun getStory(id: Long): Story
 
     fun getStoryList(request: GetStoryListRequest): Page<Story>

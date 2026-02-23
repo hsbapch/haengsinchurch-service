@@ -21,7 +21,7 @@ data class UpdateStoryRequest(
     @field:Schema(description = "스토리 내용")
     val content: String,
     @field:Schema(description = "페르소나 ID")
-    val personaId: Long,
+    val personaImageUrl: String,
 )
 
 data class GetStoryListRequest(

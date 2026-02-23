@@ -28,7 +28,7 @@ class StoryServiceImpl(
         Story(
             title = title,
             content = content,
-            persona = persona
+            personaImageUrl = persona.imageUrl
         )
     )
 
