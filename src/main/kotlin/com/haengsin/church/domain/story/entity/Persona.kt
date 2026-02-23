@@ -12,7 +12,7 @@ class Persona(
     title: String,
     imageUrl: String,
     id: Long = 0,
-) : BaseTimeEntity(id) {
+) : BaseEntity(id) {
 
 
     @Column(nullable = false)
@@ -23,4 +23,9 @@ class Persona(
     var imageUrl: String = imageUrl
         protected set
 
+
+    fun modify(title: String, imageUrl: String) {
+        this.title = title
+        this.imageUrl = imageUrl
+    }
 }

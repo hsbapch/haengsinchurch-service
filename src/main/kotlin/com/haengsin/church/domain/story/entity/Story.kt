@@ -18,7 +18,7 @@ class Story(
     content: String,
     persona: Persona,
     id: Long = 0,
-) : BaseTimeEntity(id) {
+) : BaseEntity(id) {
 
     @Column(nullable = false)
     var title: String = title

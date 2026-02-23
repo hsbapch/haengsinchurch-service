@@ -23,6 +23,18 @@ class PersonaServiceImpl(
             )
         )
 
+    @Transactional
+    override fun modify(
+        id: Long,
+        title: String,
+        imageUrl: String
+    ): Persona = getPersona(id)
+        .also{ it.modify(title, imageUrl) }
+
+    @Transactional
+    override fun delete(id: Long) = getPersona(id)
+        .let(personaRepository::delete)
+
     override fun getPersona(id: Long): Persona =
         personaRepository.findByIdOrNull(id)
             ?:  throw PersonaNotFoundException(id)
