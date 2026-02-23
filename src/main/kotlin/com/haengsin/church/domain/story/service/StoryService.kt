@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page
 
 interface StoryService {
 
-    fun create(title: String, content: String, persona: Persona): Story
+    fun create(title: String, content: String, personaImageUrl: String): Story
 
     fun update(
         story: Story,

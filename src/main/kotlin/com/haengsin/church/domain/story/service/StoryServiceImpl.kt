@@ -23,12 +23,12 @@ class StoryServiceImpl(
     override fun create(
         title: String,
         content: String,
-        persona: Persona
+        personaImageUrl: String
     ): Story = storyRepository.save(
         Story(
             title = title,
             content = content,
-            personaImageUrl = persona.imageUrl
+            personaImageUrl = personaImageUrl
         )
     )
 

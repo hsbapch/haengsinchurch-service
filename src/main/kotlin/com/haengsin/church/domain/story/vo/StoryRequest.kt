@@ -1,6 +1,5 @@
 package com.haengsin.church.domain.story.vo
 
-import com.haengsin.church.domain.board.enums.ArticleType
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -11,8 +10,8 @@ data class CreateStoryRequest(
     val title: String,
     @field:Schema(description = "스토리 내용")
     val content: String,
-    @field:Schema(description = "페르소나 ID")
-    val personaId: Long,
+    @field:Schema(description = "페르소나 image url")
+    val personaImageUrl: String,
 )
 
 data class UpdateStoryRequest(
@@ -20,7 +19,7 @@ data class UpdateStoryRequest(
     val title: String,
     @field:Schema(description = "스토리 내용")
     val content: String,
-    @field:Schema(description = "페르소나 ID")
+    @field:Schema(description = "페르소나 image url")
     val personaImageUrl: String,
 )
 
