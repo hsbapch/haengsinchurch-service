@@ -3,6 +3,7 @@ package com.haengsin.church.common
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.haengsin.church.common.component.DiscordNotifier
 import com.haengsin.church.common.exception.AccessDeniedException
+import com.haengsin.church.common.exception.InternalServerErrorException
 import com.haengsin.church.common.exception.NotFoundException
 import com.haengsin.church.configuration.filter.BaseFilter
 import jakarta.servlet.http.HttpServletRequest
@@ -26,23 +27,23 @@ class GlobalExceptionHandler(
 ) {
     private val log = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
-//    @ExceptionHandler(Exception::class)
-//    fun handleException(e: Exception, request: HttpServletRequest): ResponseEntity<Map<String, Any>> {
-//
-//        if (shouldIgnoreNoResource(e, request.requestURI)) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "not found"))
-//        }
-//
-//        notifyIfProd(
-//            title = "Server Error (500)",
-//            e = e,
-//            request = request,
-//            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
-//        )
-//
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//            .body(mapOf("message" to "internal error"))
-//    }
+    @ExceptionHandler(InternalServerErrorException::class)
+    fun handleException(e: InternalServerErrorException, request: HttpServletRequest): ResponseEntity<Map<String, Any>> {
+
+        if (shouldIgnoreNoResource(e, request.requestURI)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("message" to "not found"))
+        }
+
+        notifyIfProd(
+            title = "Server Error (500)",
+            e = e,
+            request = request,
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR
+        )
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(mapOf("message" to "internal error"))
+    }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleException(e: HttpMessageNotReadableException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
@@ -228,7 +229,6 @@ class GlobalExceptionHandler(
         }
 
         if (!ev.stacktrace.isNullOrBlank()) {
-            // 스포일러(||)로 감싸면 Discord에서 클릭해야 보이는 느낌이 됩니다.
             fields += mapOf(
                 "name" to "🧵 Stacktrace (click to expand)",
                 "value" to "||${code("text", ev.stacktrace)}||",
@@ -236,7 +236,6 @@ class GlobalExceptionHandler(
             )
         }
 
-        // 상태별 색상 (Discord embed color는 int)
         val color = when {
             ev.status.is5xxServerError -> 15158332 // red
             ev.status.is4xxClientError -> 16753920 // orange
@@ -249,7 +248,6 @@ class GlobalExceptionHandler(
                     "title" to ev.title,
                     "color" to color,
                     "fields" to fields,
-                    // Discord timestamp는 ISO8601 UTC 권장
                     "timestamp" to OffsetDateTime.now(ZoneOffset.UTC).toString()
                 )
             )
