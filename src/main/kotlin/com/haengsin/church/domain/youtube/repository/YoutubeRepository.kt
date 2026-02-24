@@ -7,8 +7,9 @@ import com.haengsin.church.domain.youtube.dto.YoutubePlayListDto
 import com.haengsin.church.domain.youtube.mapper.YoutubeMapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
+@Repository
 class YoutubeRepository(
     private val youtubeClient: YoutubeClient,
 
