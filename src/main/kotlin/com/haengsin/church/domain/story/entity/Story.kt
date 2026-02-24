@@ -35,6 +35,7 @@ class Story(
     ) {
         this.title = updateStoryRequest.title
         this.content = updateStoryRequest.content
+        this.personaImageUrl =  updateStoryRequest.personaImageUrl
         this.updatedAt = OffsetDateUtils.toSeoul(OffsetDateTime.now())
     }
 }
