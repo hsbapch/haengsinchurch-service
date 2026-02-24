@@ -26,7 +26,7 @@ class Story(
         protected set
 
     @Column(nullable = false)
-    var personaUrl: String = personaImageUrl
+    var personaImageUrl: String = personaImageUrl
         protected set
 
 
