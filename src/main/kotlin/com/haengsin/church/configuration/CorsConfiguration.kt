@@ -9,11 +9,7 @@ class CorsConfiguration : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOrigins(
-                "https://admin.haengsin.kr",
-                "https://www.haengsin.kr",
-                "http://localhost:3000",
-            )
+            .allowedOriginPatterns("*")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .exposedHeaders("Set-Cookie")
