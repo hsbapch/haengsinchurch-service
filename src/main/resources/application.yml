@@ -17,6 +17,16 @@ spring:
     url: jdbc:postgresql://localhost:5432/global_ship
     username: admin
     password: admin
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      connection-timeout: 10000
+      validation-timeout: 5000
+      keepalive-time: 60000
+      max-lifetime: 1800000
+      idle-timeout: 600000
+      initialization-fail-timeout: -1
+      connection-test-query: SELECT 1
 
   jpa:
     open-in-view: true
@@ -25,7 +35,12 @@ spring:
       hibernate:
         jdbc:
           batch_size: 1000
+          lob:
+            non_contextual_creation: true
         default_batch_fetch_size: 1000
+        query:
+          plan_cache_max_size: 4096
+          plan_parameter_metadata_max_size: 256
 
 security:
   jwt:
